@@ -1,0 +1,21 @@
+import librosa
+import numpy as np
+
+# Path to your MP3 file (update path as needed)
+audio_path = "Clarx - Zig Zag [NCS Release].mp3"
+
+# Load audio (sr=None preserves original sample rate)
+y, sr = librosa.load(audio_path, sr=None)
+
+# Extract melody using librosa's pYIN implementation
+f0, voiced_flag, voiced_prob = librosa.pyin(
+    y,
+    fmin=librosa.note_to_hz('C2'),
+    fmax=librosa.note_to_hz('C7')
+)
+
+# Replace NaNs (unvoiced frames) with -1 to indicate a rest
+melody_frequency_list = [freq if not np.isnan(freq) else -1 for freq in f0]
+
+# Print the list
+print(melody_frequency_list)
