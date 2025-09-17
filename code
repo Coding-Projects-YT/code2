@@ -17,5 +17,7 @@ f0, voiced_flag, voiced_prob = librosa.pyin(
 # Replace NaNs (unvoiced frames) with -1 to indicate a rest
 melody_frequency_list = [freq if not np.isnan(freq) else -1 for freq in f0]
 
-# Print the list
-print(melody_frequency_list)
+# Print the frequencies as a plain string, separated by commas, no spaces/brackets/type
+# Also cast values to plain Python float or int for clean output
+output = ",".join(str(int(freq)) if freq == int(freq) else str(float(freq)) for freq in melody_frequency_list)
+print(output)
